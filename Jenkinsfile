@@ -10,6 +10,8 @@ pipeline {
                     docker.build("laravel-test", "-f Dockerfile.test .").inside {
                         sh 'cp .env.example .env'
                         sh 'composer install'
+                        sh 'npm install'
+                        sh 'npm run build'
                         sh 'php artisan key:generate'
                         sh 'touch database/database.sqlite'
                         sh 'php artisan migrate --env=testing'
