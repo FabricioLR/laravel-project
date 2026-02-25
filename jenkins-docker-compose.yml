@@ -1,0 +1,21 @@
+services:
+  jenkins:
+    image: jenkins/jenkins
+    user: "0"
+    container_name: jenkins
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - ./laravel-project:/var/jenkins_home/workspace/laravel-src
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/bin/docker:/usr/bin/docker
+
+networks:
+  jenkins_network:
+    driver: bridge
+volumes:
+  jenkins_home:
+    driver: local

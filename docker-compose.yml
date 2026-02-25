@@ -1,0 +1,7 @@
+services:
+  laravel-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - '8000:8000'
