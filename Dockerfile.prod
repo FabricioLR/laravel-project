@@ -1,0 +1,17 @@
+FROM composer:latest
+
+RUN apk add npm
+
+WORKDIR /app 
+COPY . . 
+
+RUN composer install
+
+RUN npm install
+RUN npm rum build
+
+RUN php artisan migrate
+
+EXPOSE 8000
+
+CMD ["php", "artisan", "serve", "--host=0.0.0.0"]

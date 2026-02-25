@@ -1,0 +1,9 @@
+FROM composer:latest
+
+RUN apk add npm
+
+COPY . .
+
+WORKDIR /app
+
+CMD ["bash"]
