@@ -2,16 +2,16 @@ FROM composer:latest
 
 RUN apk add --no-cache npm
 
-WORKDIR /app 
+WORKDIR /var/www
 
 COPY . . 
-RUN composer install --prefer-dist --no-dev --optimize-autoloader
+RUN composer install
 RUN npm ci
 
-RUN npm run build
-
+RUN php artisan key:generate
 RUN php artisan migrate
 
 EXPOSE 8000
+EXPOSE 5173
 
-CMD ["php", "artisan", "serve", "--host=0.0.0.0"]
+CMD sh -c "php artisan serve --host=0.0.0.0 & npm run dev"

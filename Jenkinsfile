@@ -4,7 +4,7 @@ pipeline {
         githubPush()
     }
     stages {
-         stage('Build & Test') {
+        stage('Build & Test') {
             steps {
                 script {
                     docker.build("laravel-test", "-f Dockerfile.test .").inside {

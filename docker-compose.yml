@@ -1,7 +1,22 @@
 services:
   laravel-dev:
-    build:
+    build: 
       context: .
       dockerfile: Dockerfile.dev
+    container_name: laravel-dev
     ports:
-      - '8000:8000'
+      - "8000:8000"
+      - "5173:5173"
+    volumes:
+      - .:/var/www
+#    depends_on:
+#      - db
+#
+#  db:
+#    image: mysql:8
+#    container_name: laravel_db
+#    environment:
+#      MYSQL_ROOT_PASSWORD: root
+#      MYSQL_DATABASE: laravel
+#    ports:
+#      - "3306:3306"
