@@ -1,16 +1,15 @@
-FROM composer:latest
+FROM php:8.4-fpm
 
-RUN apk add npm
+RUN apt-get update && apt-get install -y libpq-dev unzip p7zip-full npm && docker-php-ext-install pdo pdo_pgsql pgsql
 
-WORKDIR /app 
+COPY --from=composer /usr/bin/composer /usr/bin/composer
+
+WORKDIR /var/www
+
 COPY . . 
-
 RUN composer install
-
 RUN npm install
-RUN npm rum build
-
-RUN php artisan migrate
+RUN npm run build
 
 EXPOSE 8000
 

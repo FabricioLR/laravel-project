@@ -1,9 +1,11 @@
-FROM composer:latest
+FROM php:8.4-fpm
 
-RUN apk add npm
+RUN apt-get update && apt-get install -y libpq-dev unzip p7zip-full npm && docker-php-ext-install pdo pdo_pgsql pgsql
+
+COPY --from=composer /usr/bin/composer /usr/bin/composer
+
+WORKDIR /var/www
 
 COPY . .
-
-WORKDIR /app
 
 CMD ["bash"]

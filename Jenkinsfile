@@ -8,13 +8,27 @@ pipeline {
             steps {
                 script {
                     docker.build("laravel-test", "-f Dockerfile.test .").inside {
-                        sh 'cp .env.example .env'
+                        withCredentials([
+                            string(credentialsId: 'app-key', variable: 'APP_KEY'),
+                            string(credentialsId: 'db-password', variable: 'DB_PASSWORD')
+                        ]) {
+                            sh '''
+                                export DB_PASSWORD=${DB_PASSWORD}
+                                export DB_DATABASE=test
+                                export DB_USERNAME=fabricio
+                                export APP_NAME=Laravel
+                                export APP_ENV=local
+                                export APP_KEY={$APP_KEY}
+                                export APP_DEBUG=true
+                                export APP_URL=http://127.0.0.1:8000
+                                export DB_CONNECTION=pgsql
+                                export DB_HOST=172.17.0.1
+                                export DB_PORT=5432
+                            '''
+                        }
                         sh 'composer install'
                         sh 'npm install'
-                        sh 'npm run build'
-                        sh 'php artisan key:generate'
-                        sh 'touch database/database.sqlite'
-                        sh 'php artisan migrate --env=testing'
+                        sh 'php artisan migrate'
                         sh 'php artisan test'
                     }
                 }
@@ -24,9 +38,7 @@ pipeline {
         stage('Build Production Image') {
             steps {
                 script {
-                    docker.build("laravel-prod", "-f Dockerfile.prod .").inside {
-                        sh 'cp .env.example .env'
-                    }
+                    docker.build("laravel-prod", "-f Dockerfile.prod .")
                 }
             }
         }
@@ -34,9 +46,27 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
+                    withCredentials([
+                        string(credentialsId: 'app-key', variable: 'APP_KEY'),
+                        string(credentialsId: 'db-password', variable: 'DB_PASSWORD')
+                    ]) {
+                        sh '''
+                            export DB_PASSWORD=${DB_PASSWORD}
+                            export DB_DATABASE=projects
+                            export DB_USERNAME=fabricio
+                            export APP_NAME=Laravel
+                            export APP_ENV=production
+                            export APP_KEY={$APP_KEY}
+                            export APP_DEBUG=false
+                            export APP_URL=http://127.0.0.1:8000
+                            export DB_CONNECTION=pgsql
+                            export DB_HOST=172.17.0.1
+                            export DB_PORT=5432
+                        '''
+                    }
                     sh 'docker stop laravel-prod || true'
                     sh 'docker rm laravel-prod || true'
-                    sh 'docker run -d --name laravel-prod -p 8000:8000 laravel-prod:latest'
+                    sh 'docker run --env-file .env -d --name laravel-prod -p 8000:8000 laravel-prod:latest'
                 }
             }
         }
