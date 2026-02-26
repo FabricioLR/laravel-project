@@ -27,7 +27,7 @@ pipeline {
                             '''
                             sh 'composer install'
                             sh 'npm install'
-                            sh 'php artisan migrate'
+                            sh 'echo $APP_ENV && php artisan migrate --force'
                             sh 'php artisan test'
                         }
                     }
