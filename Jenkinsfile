@@ -13,19 +13,17 @@ pipeline {
                     ]) {
                         docker.build("laravel-test", "-f Dockerfile.test .").inside {
                             sh """
-                            cat > .env <<EOL
-                            APP_NAME=Laravel
-                            APP_ENV=local
-                            APP_KEY=
-                            APP_DEBUG=true
-                            APP_URL=http://127.0.0.1:8000
-                            DB_CONNECTION=pgsql
-                            DB_HOST=172.17.0.1
-                            DB_PORT=5432
-                            DB_DATABASE=test
-                            DB_USERNAME=fabricio
-                            DB_PASSWORD=${DB_PASSWORD}
-                            EOL
+                            echo "APP_NAME=Laravel" > .env
+                            echo "APP_ENV=local" >> .env
+                            echo "APP_KEY=" >> .env
+                            echo "APP_DEBUG=true" >> .env
+                            echo "APP_URL=http://127.0.0.1:8000" >> .env
+                            echo "DB_CONNECTION=pgsql" >> .env
+                            echo "DB_HOST=172.17.0.1" >> .env
+                            echo "DB_PORT=5432" >> .env
+                            echo "DB_DATABASE=test" >> .env
+                            echo "DB_USERNAME=fabricio" >> .env
+                            echo "DB_PASSWORD=${DB_PASSWORD}" >> .env
                             """
                             sh 'composer install'
                             sh 'npm install'
