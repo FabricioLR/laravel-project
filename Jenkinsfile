@@ -11,7 +11,7 @@ pipeline {
                         string(credentialsId: 'app-key', variable: 'APP_KEY'),
                         string(credentialsId: 'db-password', variable: 'DB_PASSWORD')
                     ]) {
-                        docker.build("laravel-test", "-f Dockerfile.test .").inside('-e DB_PORT=5432 -e APP_URL=http://127.0.0.1:8000 -e DB_HOST=172.17.0.1 -e DB_CONNECTION=pgsql -e DB_PASSWORD=${DB_PASSWORD} -e DB_DATABASE=test -e DB_USERNAME=fabricio -e APP_NAME=Laravel -e APP_ENV=local -e APP_KEY=${APP_KEY} -e APP_DEBUG=true') {
+                        docker.build("laravel-test", "-f Dockerfile.test .").inside("-e DB_PORT=5432 -e APP_URL=http://127.0.0.1:8000 -e DB_HOST=172.17.0.1 -e DB_CONNECTION=pgsql -e DB_PASSWORD=${DB_PASSWORD} -e DB_DATABASE=test -e DB_USERNAME=fabricio -e APP_NAME=Laravel -e APP_ENV=local -e APP_KEY=${APP_KEY} -e APP_DEBUG=true") {
                             sh 'composer install'
                             sh 'npm install'
                             sh "npm run build"
