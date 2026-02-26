@@ -8,7 +8,6 @@ pipeline {
             steps {
                 script {
                     withCredentials([
-                        string(credentialsId: 'app-key', variable: 'APP_KEY'),
                         string(credentialsId: 'db-password', variable: 'DB_PASSWORD')
                     ]) {
                         docker.build("laravel-test", "-f Dockerfile.test .").inside {
@@ -28,6 +27,7 @@ pipeline {
                             sh 'composer install'
                             sh 'npm install'
                             sh 'npm run build'
+                            sh 'php artisan config:clear'
                             sh 'php artisan key:generate'
                             sh 'php artisan migrate'
                             sh 'php artisan test'
