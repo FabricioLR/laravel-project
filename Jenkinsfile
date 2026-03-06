@@ -8,7 +8,7 @@ pipeline {
             steps {
                 script {
                     withCredentials([
-                        string(credentialsId: 'db-password', variable: 'DB_PASSWORD')
+                        string(credentialsId: 'db-password-test', variable: 'DB_PASSWORD')
                     ]) {
                         docker.build("laravel-test", "-f Dockerfile.test .").inside {
                             sh """
@@ -18,10 +18,10 @@ pipeline {
                             echo "APP_DEBUG=true" >> .env
                             echo "APP_URL=http://127.0.0.1:8000" >> .env
                             echo "DB_CONNECTION=pgsql" >> .env
-                            echo "DB_HOST=172.17.0.1" >> .env
+                            echo "DB_HOST=10.0.0.110" >> .env
                             echo "DB_PORT=5432" >> .env
                             echo "DB_DATABASE=test" >> .env
-                            echo "DB_USERNAME=fabricio" >> .env
+                            echo "DB_USERNAME=test" >> .env
                             echo "DB_PASSWORD=${DB_PASSWORD}" >> .env
                             """
                             sh 'composer install'
@@ -52,18 +52,18 @@ pipeline {
                         string(credentialsId: 'db-password', variable: 'DB_PASSWORD')
                     ]) {
                         sh """
-                            echo "APP_NAME=Laravel" > .env
-                            echo "APP_ENV=production" >> .env
-                            echo "APP_KEY=${APP_KEY}" >> .env
-                            echo "APP_DEBUG=false" >> .env
-                            echo "APP_URL=http://127.0.0.1:8000" >> .env
-                            echo "DB_CONNECTION=pgsql" >> .env
-                            echo "DB_HOST=172.17.0.1" >> .env
-                            echo "DB_PORT=5432" >> .env
-                            echo "DB_DATABASE=projects" >> .env
-                            echo "DB_USERNAME=fabricio" >> .env
-                            echo "DB_PASSWORD=${DB_PASSWORD}" >> .env
-                            """
+                        echo "APP_NAME=Laravel" > .env
+                        echo "APP_ENV=production" >> .env
+                        echo "APP_KEY=${APP_KEY}" >> .env
+                        echo "APP_DEBUG=false" >> .env
+                        echo "APP_URL=http://server1.fabriciolr.online:8000" >> .env
+                        echo "DB_CONNECTION=pgsql" >> .env
+                        echo "DB_HOST=10.0.0.110" >> .env
+                        echo "DB_PORT=5432" >> .env
+                        echo "DB_DATABASE=prod" >> .env
+                        echo "DB_USERNAME=prod" >> .env
+                        echo "DB_PASSWORD=${DB_PASSWORD}" >> .env
+                        """
                         sh 'docker stop laravel-prod || true'
                         sh 'docker rm laravel-prod || true'
                         sh 'docker run -d --name laravel-prod -p 8000:8000 --env-file .env laravel-prod:latest'
