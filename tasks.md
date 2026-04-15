@@ -27,13 +27,13 @@ Garantir o isolamento de dados entre usuários.
     - [x] Usuario A **não pode** atualizar tarefas do Usuario B.
     - [x] Usuario A **não pode** deletar tarefas do Usuario B.
 
-## 🟢 Task 4: Fluxo de Criação (Store)
+## ✅ Task 4: Fluxo de Criação (Store)
 Implementar a criação de tarefas com validação.
 - **Ações**: Criar `TodoRequest` (regras: title required, min:3). Implementar `TodoController@store`.
 - **Suite de Testes**: `tests/Feature/TodoStoreTest.php`
-    - [ ] `POST /dashboard` com título válido cria a tarefa.
-    - [ ] `POST /dashboard` sem título retorna erro de validação (422).
-    - [ ] Assert que a tarefa criada pertence ao usuário autenticado.
+    - [x] `POST /dashboard` com título válido cria a tarefa.
+    - [x] `POST /dashboard` sem título retorna erro de validação (422).
+    - [x] Assert que a tarefa criada pertence ao usuário autenticado.
 
 ## 🟢 Task 5: Listagem e Filtragem (Index)
 Implementar a visualização principal com suporte a filtros e busca.
