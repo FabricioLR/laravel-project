@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/app-layout';
 import { dashboard } from '@/routes';
+import { destroy, store, update } from '@/routes/todos';
 import type { BreadcrumbItem, Todo } from '@/types';
 import { Head, router, useForm } from '@inertiajs/react';
 import { Filter, Loader2, Plus, Search, Trash2 } from 'lucide-react';
@@ -36,8 +37,8 @@ export default function Dashboard({ todos, filters }: DashboardProps) {
     useEffect(() => {
         if (deferredSearch !== filters.search) {
             router.get(
-                route('dashboard'),
-                { ...filters, search: deferredSearch },
+                dashboard({ query: { ...filters, search: deferredSearch } }).url,
+                {},
                 { preserveState: true, replace: true },
             );
         }
@@ -45,25 +46,25 @@ export default function Dashboard({ todos, filters }: DashboardProps) {
 
     const handleAddTask = (e: React.FormEvent) => {
         e.preventDefault();
-        post(route('todos.store'), {
+        post(store().url, {
             onSuccess: () => reset(),
         });
     };
 
     const toggleTodo = (todo: Todo) => {
-        router.patch(route('todos.update', todo.id), {
+        router.patch(update.url(todo.id), {
             is_completed: !todo.is_completed,
         });
     };
 
     const deleteTodo = (todo: Todo) => {
         if (confirm('Are you sure you want to delete this task?')) {
-            router.delete(route('todos.destroy', todo.id));
+            router.delete(destroy.url(todo.id));
         }
     };
 
     const setStatusFilter = (status: string | null) => {
-        router.get(route('dashboard'), { ...filters, status }, { preserveState: true });
+        router.get(dashboard({ query: { ...filters, status } }).url, {}, { preserveState: true });
     };
 
     return (
@@ -188,7 +189,7 @@ export default function Dashboard({ todos, filters }: DashboardProps) {
                                 {filters.search ? `Não encontramos resultados para "${filters.search}"` : 'Comece adicionando sua primeira tarefa acima!'}
                             </p>
                             {filters.status || filters.search ? (
-                                <Button variant="link" onClick={() => (window.location.href = route('dashboard'))} className="mt-2 text-primary">
+                                <Button variant="link" onClick={() => (window.location.href = dashboard().url)} className="mt-2 text-primary">
                                     Limpar filtros
                                 </Button>
                             ) : null}
