@@ -12,12 +12,12 @@ Criar a fundação de dados para as tarefas.
     - [x] Validar se `is_completed` é castado para boolean.
     - [x] Validar se a constraint `user_id` impede registros órfãos.
 
-## 🟢 Task 2: Fábricas e Relacionamentos
+## ✅ Task 2: Fábricas e Relacionamentos
 Habilitar a geração de dados fakes para testes e definir vínculos Eloquent.
 - **Ações**: Criar `TodoFactory`. Definir `todos()` em `User.php` e `user()` em `Todo.php`.
-- **Suite de Testes**: `tests/Unit/TodoRelationshipTest.php`
-    - [ ] Assert que um `User` possui relação `HasMany` com `Todo`.
-    - [ ] Assert que um `Todo` pertence a um `User`.
+- **Suite de Testes**: `tests/Feature/TodoRelationshipTest.php`
+    - [x] Assert que um `User` possui relação `HasMany` com `Todo`.
+    - [x] Assert que um `Todo` pertence a um `User`.
 
 ## 🟢 Task 3: Camada de Segurança (Policies)
 Garantir o isolamento de dados entre usuários.
