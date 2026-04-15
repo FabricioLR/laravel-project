@@ -35,13 +35,13 @@ Implementar a criação de tarefas com validação.
     - [x] `POST /dashboard` sem título retorna erro de validação (422).
     - [x] Assert que a tarefa criada pertence ao usuário autenticado.
 
-## 🟢 Task 5: Listagem e Filtragem (Index)
+## ✅ Task 5: Listagem e Filtragem (Index)
 Implementar a visualização principal com suporte a filtros e busca.
 - **Ações**: Implementar `TodoController@index`. Adicionar filtros por status (pending/completed) e busca textual.
 - **Suite de Testes**: `tests/Feature/TodoIndexTest.php`
-    - [ ] `GET /dashboard` retorna apenas tarefas do usuário logado.
-    - [ ] Filtro `?status=completed` retorna apenas tarefas concluídas.
-    - [ ] Filtro `?search=xyz` retorna apenas tarefas correspondentes.
+    - [x] `GET /dashboard` retorna apenas tarefas do usuário logado.
+    - [x] Filtro `?status=completed` retorna apenas tarefas concluídas.
+    - [x] Filtro `?search=xyz` retorna apenas tarefas correspondentes.
 
 ## 🟢 Task 6: Atualização e Remoção (Update/Destroy)
 Implementar modificação de estado e exclusão.

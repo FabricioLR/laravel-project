@@ -10,9 +10,26 @@ class TodoController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $todos = $request->user()->todos()
+            ->when($request->status, function ($query, $status) {
+                if ($status === 'completed') {
+                    $query->where('is_completed', true);
+                } elseif ($status === 'pending') {
+                    $query->where('is_completed', false);
+                }
+            })
+            ->when($request->search, function ($query, $search) {
+                $query->where('title', 'like', "%{$search}%");
+            })
+            ->latest()
+            ->get();
+
+        return \Inertia\Inertia::render('dashboard', [
+            'todos' => $todos,
+            'filters' => $request->only(['status', 'search']),
+        ]);
     }
 
     /**
