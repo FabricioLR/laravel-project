@@ -55,11 +55,13 @@ class TodoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Todo $todo)
+    public function update(\App\Http\Requests\TodoRequest $request, Todo $todo)
     {
         \Illuminate\Support\Facades\Gate::authorize('update', $todo);
 
-        // TODO: Implement update logic
+        $todo->update($request->validated());
+
+        return redirect()->back();
     }
 
     /**
@@ -69,6 +71,8 @@ class TodoController extends Controller
     {
         \Illuminate\Support\Facades\Gate::authorize('delete', $todo);
 
-        // TODO: Implement destroy logic
+        $todo->delete();
+
+        return redirect()->back();
     }
 }

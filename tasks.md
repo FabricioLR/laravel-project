@@ -43,12 +43,12 @@ Implementar a visualização principal com suporte a filtros e busca.
     - [x] Filtro `?status=completed` retorna apenas tarefas concluídas.
     - [x] Filtro `?search=xyz` retorna apenas tarefas correspondentes.
 
-## 🟢 Task 6: Atualização e Remoção (Update/Destroy)
+## ✅ Task 6: Atualização e Remoção (Update/Destroy)
 Implementar modificação de estado e exclusão.
 - **Ações**: Implementar `TodoController@update` (toggle e edição) e `TodoController@destroy`.
 - **Suite de Testes**: `tests/Feature/TodoUpdateDeleteTest.php`
-    - [ ] `PATCH /dashboard/{id}` alterna `is_completed`.
-    - [ ] `DELETE /dashboard/{id}` remove o registro e redireciona.
+    - [x] `PATCH /dashboard/{id}` alterna `is_completed`.
+    - [x] `DELETE /dashboard/{id}` remove o registro e redireciona.
 
 ## 🟢 Task 7: Interface Reativa (Frontend)
 Reconstruir a UI da Dashboard para a aplicação de tarefas.
