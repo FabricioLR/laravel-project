@@ -8,7 +8,14 @@ Route::inertia('/', 'welcome', [
 ])->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::inertia('dashboard', 'dashboard')->name('dashboard');
+    Route::resource('dashboard', \App\Http\Controllers\TodoController::class)
+        ->parameter('dashboard', 'todo')
+        ->names([
+            'index' => 'dashboard',
+            'store' => 'todos.store',
+            'update' => 'todos.update',
+            'destroy' => 'todos.destroy',
+        ]);
 });
 
 require __DIR__.'/settings.php';

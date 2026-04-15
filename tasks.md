@@ -19,13 +19,13 @@ Habilitar a geração de dados fakes para testes e definir vínculos Eloquent.
     - [x] Assert que um `User` possui relação `HasMany` com `Todo`.
     - [x] Assert que um `Todo` pertence a um `User`.
 
-## 🟢 Task 3: Camada de Segurança (Policies)
+## ✅ Task 3: Camada de Segurança (Policies)
 Garantir o isolamento de dados entre usuários.
 - **Ações**: Gerar `TodoPolicy` e registrar no `AuthServiceProvider` (se necessário no Laravel 12) ou usar resolução automática. Implementar logicamente `update` e `delete`.
 - **Suite de Testes**: `tests/Feature/TodoAuthorizationTest.php`
-    - [ ] Usuario A **não pode** visualizar tarefas do Usuario B.
-    - [ ] Usuario A **não pode** atualizar tarefas do Usuario B.
-    - [ ] Usuario A **não pode** deletar tarefas do Usuario B.
+    - [x] Usuario A **não pode** visualizar tarefas do Usuario B.
+    - [x] Usuario A **não pode** atualizar tarefas do Usuario B.
+    - [x] Usuario A **não pode** deletar tarefas do Usuario B.
 
 ## 🟢 Task 4: Fluxo de Criação (Store)
 Implementar a criação de tarefas com validação.
