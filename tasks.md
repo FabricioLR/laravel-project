@@ -50,9 +50,9 @@ Implementar modificação de estado e exclusão.
     - [x] `PATCH /dashboard/{id}` alterna `is_completed`.
     - [x] `DELETE /dashboard/{id}` remove o registro e redireciona.
 
-## 🟢 Task 7: Interface Reativa (Frontend)
+## ✅ Task 7: Interface Reativa (Frontend)
 Reconstruir a UI da Dashboard para a aplicação de tarefas.
 - **Ações**: Refatorar `dashboard.tsx`. Integrar form creation, toggle hooks e visualização de filtros.
 - **Suite de Testes**:
-    - [ ] **Manual**: Verificar se o botão de toggle atualiza a lista sem reload total.
-    - [ ] **Manual**: Validar exibição de erros do Laravel via `useForm`.
+    - [x] **Manual**: Verificar se o botão de toggle atualiza a lista sem reload total.
+    - [x] **Manual**: Validar exibição de erros do Laravel via `useForm`.
