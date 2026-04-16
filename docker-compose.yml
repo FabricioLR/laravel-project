@@ -1,11 +1,14 @@
 services:
-  laravel-dev:
-    build: 
+  app:
+    build:
       context: .
-      dockerfile: Dockerfile.dev
-    container_name: laravel-dev
+      dockerfile: docker/php/Dockerfile.dev
+    container_name: laravel_app_dev
     ports:
       - "8000:8000"
       - "5173:5173"
     volumes:
       - .:/var/www
+    environment:
+      - APP_ENV=local
+      - APP_DEBUG=true

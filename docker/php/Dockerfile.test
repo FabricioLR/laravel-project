@@ -1,0 +1,27 @@
+FROM php:8.4-fpm
+
+RUN apt-get update && apt-get install -y \
+    libpq-dev \
+    libonig-dev \
+    libicu-dev \
+    git \
+    unzip \
+    libzip-dev \
+    zip \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN docker-php-ext-install pdo pdo_pgsql pgsql zip mbstring intl
+
+RUN pecl install xdebug && docker-php-ext-enable xdebug
+RUN echo "xdebug.mode=coverage" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+WORKDIR /var/www
+COPY . .
+
+RUN composer install
+
+RUN mkdir -p storage bootstrap/cache && chmod -R 777 storage bootstrap/cache
+
+CMD ["vendor/bin/phpunit"]
