@@ -5,10 +5,8 @@ services:
       target: test
       dockerfile: docker/php/Dockerfile
     entrypoint: []
-    command: sh -c "php artisan migrate --force && php artisan test"
+    command: sh -c "touch .env && php artisan migrate --force && php artisan test"
     container_name: laravel_app_test
-    volumes:
-      - .:/var/www
     depends_on:
       db:
         condition: service_healthy

@@ -24,20 +24,20 @@ ENTRYPOINT ["entrypoint.sh"]
 
 FROM base AS build-assets
 COPY . .
-RUN npm install && npm run build
+RUN composer install && npm install && npm run build
 
 
 FROM base AS test
 COPY . .
-COPY --from=build-assets /app/public/build ./public/build
-RUN composer install
+COPY --from=build-assets /var/www/public/build ./public/build
+COPY --from=build-assets /var/www/vendor ./vendor
 RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 CMD ["php-fpm"]
 
 
 FROM base AS prod
 COPY . .
-COPY --from=build-assets /app/public/build ./public/build
-RUN composer install
+COPY --from=build-assets /var/www/public/build ./public/build
+COPY --from=build-assets /var/www/vendor ./vendor
 RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 CMD ["php-fpm"]
