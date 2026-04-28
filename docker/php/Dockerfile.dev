@@ -26,7 +26,4 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www
 
-EXPOSE 8000
-EXPOSE 5173
-
 CMD sh -c "composer install && npm install && (php artisan serve --host=0.0.0.0 & npm run dev)"

@@ -2,14 +2,17 @@ services:
   app:
     build:
       context: .
-      dockerfile: docker/php/Dockerfile.prod
+      target: prod
+      dockerfile: docker/php/Dockerfile
     container_name: laravel_app_prod
     restart: unless-stopped
-    environment:
-      - APP_ENV=production
-      - APP_DEBUG=false
+    #environment:
+    #  - APP_ENV=production
+    #  - APP_DEBUG=false
+    env_file:
+      - .env
     volumes:
-      - laravel_storage:/var/www/storage
+      - laravel_public:/var/www/html/public
     networks:
       - prod_net
 
@@ -22,6 +25,8 @@ services:
     ports:
       - "8000:8000"
     volumes:
+      - public_data:/var/www/html/public:ro
+      - ./docker/nginx/prod.conf:/etc/nginx/conf.d/default.conf
       - /etc/letsencrypt/archive/server1.fabriciolr.online:/etc/nginx/cert:ro
     depends_on:
       - app
@@ -33,4 +38,4 @@ networks:
     driver: bridge
 
 volumes:
-  laravel_storage:
+  laravel_public:

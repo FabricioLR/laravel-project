@@ -2,13 +2,33 @@ services:
   app:
     build:
       context: .
-      dockerfile: docker/php/Dockerfile.dev
+      target: dev
+      dockerfile: docker/php/Dockerfile
     container_name: laravel_app_dev
     ports:
       - "8000:8000"
       - "5173:5173"
     volumes:
       - .:/var/www
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:15-alpine
+    container_name: laravel_db_dev
+    restart: unless-stopped
     environment:
-      - APP_ENV=local
-      - APP_DEBUG=true
+      POSTGRES_DB: ${DB_DATABASE:-laravel_dev}
+      POSTGRES_USER: ${DB_USERNAME:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-postgres}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pg_data:
