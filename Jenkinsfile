@@ -6,8 +6,7 @@ pipeline {
     stages {
         stage('Build & Test') {
             steps {
-                sh 'docker compose -f docker-compose.test.yml build'
-                sh 'docker compose -f docker-compose.test.yml up'
+                sh 'docker compose -f docker-compose.test.yml up --build --exit-code-from app'
                 sh 'docker compose -f docker-compose.test.yml down'
             }
         }
