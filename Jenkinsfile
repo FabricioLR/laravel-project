@@ -35,7 +35,7 @@ pipeline {
                     echo "DB_PASSWORD=${DB_PASSWORD}" >> .env
                     """
                     sh 'docker compose -f docker-compose.prod.yml down'
-                    sh 'docker compose -f docker-compose.prod.yml up -d'
+                    sh 'docker compose -f docker-compose.prod.yml up --exit-code-from app'
                 }
             }
         }
@@ -43,7 +43,7 @@ pipeline {
     
     post {
         always {
-            sh 'docker compose -f docker-compose.test.yml down -v || true'
+            sh 'docker compose -p laravel-test -f docker-compose.test.yml down || true'
             cleanWs()
         }
     }
